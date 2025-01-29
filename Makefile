@@ -5,26 +5,17 @@ ifndef VERBOSE
 	MAKEFLAGS += --silent --no-print-directory
 endif
 MAKEFLAGS		+= --jobs
-VALGRIND		:= valgrind -q -s --leak-check=yes --show-leak-kinds=all \
-					--track-fds=yes --track-origins=yes --trace-children=yes \
-					--verbose
-ERR_MUTE		:= 2>/dev/null
-
-PROJECT_NAME	:= Inveption
 
 #------------------------------------------------------------------------------#
 #   SOURCES                                                                    #
 #------------------------------------------------------------------------------#
 SOURCES_DIR	:= ./srcs/
-COMPOSE		:= docker compose  --project-directory ${SOURCES_DIR}
+COMPOSE		:= docker compose --project-directory ${SOURCES_DIR}
 DATA		:= ${HOME}/data
 VOLUMES		:= ${addprefix ${DATA}/, \
 					wordpress \
 					maridadb \
-					portfolio \
 					info \
-					grafana \
-					prometheus \
 				}
 
 
@@ -42,7 +33,7 @@ END		:= $(shell tput sgr0)
 #------------------------------------------------------------------------------#
 all: up
 
-up: create_dir build create
+up: create_dir
 	${COMPOSE} up -d
 
 down: down
