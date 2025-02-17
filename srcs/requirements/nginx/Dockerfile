@@ -1,12 +1,14 @@
 FROM debian:bookworm
 
-RUN apt-get update && \
-	apt-get dist-upgrade -y && \
-	apt-get install -y \
-		curl \
-		wget \
-		nginx \
-	apt-get clean
+RUN <<eof
+apt-get update && \
+apt-get dist-upgrade -y && \
+apt-get install -y \
+	curl \
+	wget \
+	nginx && \
+apt-get clean
+eof
 
 COPY conf/ngingx.conf /etc/nginx/nginx.conf
 
