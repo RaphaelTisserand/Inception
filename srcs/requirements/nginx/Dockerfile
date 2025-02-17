@@ -1,6 +1,6 @@
 FROM debian:bookworm
 
-RUN apt-get update -y && \
+RUN apt-get update && \
 	apt-get dist-upgrade -y && \
 	apt-get install -y \
 		curl \
@@ -8,4 +8,7 @@ RUN apt-get update -y && \
 		nginx \
 	apt-get clean
 
-RUN mkdir -p
+COPY conf/ngingx.conf /etc/nginx/nginx.conf
+
+ENTRYPOINT ["ngingx"]
+CMD ["-g", "daemon off;"]
