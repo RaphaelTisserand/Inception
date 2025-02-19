@@ -3,9 +3,9 @@
 FROM debian:bookworm
 
 RUN <<eof
-apt-get update && \
-apt-get dist-upgrade -y && \
-apt-get install -y nginx && \
+apt-get update
+apt-get dist-upgrade -y
+apt-get install -y nginx
 apt-get clean
 eof
 
