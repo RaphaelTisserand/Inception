@@ -2,6 +2,9 @@
 
 FROM debian:bookworm
 
+ENV APP_PORT=8080 \
+	APP_VERSION=1.0.0
+
 LABEL maintainer="Raphael TISSERAND <rtissera@student.42.fr>"
 
 RUN <<EOF
@@ -9,8 +12,7 @@ apt-get update
 apt-get dist-upgrade -y
 apt-get install nginx openssl vim curl -y
 apt-get clean
-rm -rf /var/lib/apt/lists/*
-mkdir -p /etc/nginx/certificates
+mkdir -p /etc/nginx/ssl
 openssl req \
 		-x509 \
 		-newkey rsa:2048 \
@@ -18,11 +20,15 @@ openssl req \
 		-out /etc/nginx/certificates/fullchain.pem \
 		-days 365 \
 		-nodes \
-		-subj '/C=FR/ST=Ile-de-France/L=Paris/O=42Paris/CN=Raphael TISSERAND/UID=rtissera'
+		-subj '/C=FR/ST=Ile-deFrance/L=Paris/O=42Paris/CN=Raphael TISSERAND/UID=rtissera
 EOF
 
-COPY /conf/nginx.conf /etc/nginx/
+COPY . /app
 
-RUN chown -R www-data:www-data /var/www/html
+WORKDIR /app
 
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+EXPOSE $APP_PORT
+
+COPY /conf/ngingx.conf /etc/nginx/
+
+ENTRYPOINT ["ngingx", "-g", "daemon off;"]
