@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM debian:bookworm
+FROM debian:stable
 
 RUN <<eof
 apt-get update
@@ -9,6 +9,6 @@ apt-get install -y nginx
 apt-get clean
 eof
 
-COPY conf/ngingx.conf /etc/nginx/nginx.conf
+COPY /conf/ngingx.conf /etc/nginx/
 
 ENTRYPOINT ["ngingx", "-g", "daemon off;"]
