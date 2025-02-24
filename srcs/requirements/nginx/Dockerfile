@@ -10,19 +10,20 @@ apt-get dist-upgrade -y
 apt-get install nginx openssl vim curl -y
 apt-get clean
 rm -rf /var/lib/apt/lists/*
-mkdir -p /etc/nginx/certificates
+mkdir -p /etc/nginx/ssl /data/www /data/image
 openssl req \
 		-x509 \
 		-newkey rsa:2048 \
 		-keyout /etc/nginx/ssl/inception.key \
 		-out /etc/nginx/ssl/inception.crt \
 		-days 365 \
-		-nodes \
-		-subj '/C=FR/ST=Ile-de-France/L=Paris/O=42Paris/CN=Raphael TISSERAND/UID=rtissera'
+		-noenc \
+		-subj '/C=FR/ST=Ile-de-France/L=Paris/O=42/OU=42Paris/CN=rtissera.42.fr/UID=rtissera/emailAddress=rtissera@student.42.fr'
 EOF
 
-COPY /conf/nginx.conf /etc/nginx/
+COPY ./conf/nginx.conf ./etc/nginx/
 
 RUN chown -R www-data:www-data /var/www/html
 
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx"]
+CMD ["-g", "daemon off;"]
