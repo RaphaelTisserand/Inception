@@ -14,8 +14,8 @@ mkdir -p /etc/nginx/certificates
 openssl req \
 		-x509 \
 		-newkey rsa:2048 \
-		-keyout /etc/nginx/certificates/privkey.pem \
-		-out /etc/nginx/certificates/fullchain.pem \
+		-keyout /etc/nginx/ssl/inception.key \
+		-out /etc/nginx/ssl/inception.crt \
 		-days 365 \
 		-nodes \
 		-subj '/C=FR/ST=Ile-de-France/L=Paris/O=42Paris/CN=Raphael TISSERAND/UID=rtissera'
