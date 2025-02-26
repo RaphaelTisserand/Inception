@@ -10,7 +10,7 @@ apt-get dist-upgrade -y
 apt-get install nginx openssl vim curl -y
 apt-get clean
 rm -rf /var/lib/apt/lists/*
-mkdir -p /etc/nginx/ssl /data/www /data/image
+mkdir -p /etc/nginx/ssl
 openssl req \
 		-x509 \
 		-newkey rsa:2048 \
