@@ -11,7 +11,8 @@ MAKEFLAGS		+= --jobs
 #------------------------------------------------------------------------------#
 SOURCES_DIR		:= ./srcs/requirements/
 COMPOSE			:= docker compose --project-directory ${SOURCES_DIR}
-VOLUMES			:= ${addprefix ${SOURCES_DIR}/, \
+DATA			:= ${HOME}/data
+VOLUMES			:= ${addprefix ${DATA}/, \
 						nginx \
 					}
 
