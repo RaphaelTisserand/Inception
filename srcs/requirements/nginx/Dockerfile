@@ -7,7 +7,7 @@ LABEL maintainer="Raphael TISSERAND <rtissera@student.42.fr>"
 RUN <<EOF
 apt-get update
 apt-get dist-upgrade -y
-apt-get install nginx openssl vim curl -y
+apt-get install nginx openssl -y
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 mkdir -p /etc/nginx/ssl

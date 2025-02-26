@@ -9,14 +9,11 @@ MAKEFLAGS		+= --jobs
 #------------------------------------------------------------------------------#
 #   SOURCES                                                                    #
 #------------------------------------------------------------------------------#
-SOURCES_DIR	:= ./srcs/
-COMPOSE		:= docker compose --project-directory ${SOURCES_DIR}
-DATA		:= ${HOME}/data
-VOLUMES		:= ${addprefix ${DATA}/, \
-					wordpress \
-					maridadb \
-					info \
-				}
+SOURCES_DIR		:= ./srcs/requirements/
+COMPOSE			:= docker compose --project-directory ${SOURCES_DIR}
+VOLUMES			:= ${addprefix ${SOURCES_DIR}/, \
+						nginx \
+					}
 
 
 #------------------------------------------------------------------------------#
