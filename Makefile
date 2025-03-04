@@ -4,7 +4,7 @@
 ifndef VERBOSE
 	MAKEFLAGS += --silent --no-print-directory
 endif
-MAKEFLAGS		+= --jobs
+MAKEFLAGS	+= --jobs
 
 #------------------------------------------------------------------------------#
 #   SOURCES                                                                    #
