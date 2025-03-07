@@ -18,4 +18,4 @@ COPY ./conf/mariadb.conf .etc/mariadb
 
 EXPOSE 3306
 
-ENTRYPOINT ["mariadb"]
+ENTRYPOINT ["./conf/myscript.sh"]
