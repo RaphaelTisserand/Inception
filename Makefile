@@ -1,57 +1,54 @@
-#------------------------------------------------------------------------------#
-#   CONFIG                                                                     #
-#------------------------------------------------------------------------------#
-ifndef VERBOSE
-	MAKEFLAGS += --silent --no-print-directory
-endif
-MAKEFLAGS	+= --jobs
-
-#------------------------------------------------------------------------------#
-#   SOURCES                                                                    #
-#------------------------------------------------------------------------------#
-SOURCES_DIR		:= ./srcs/requirements/
-COMPOSE			:= docker compose --project-directory ${SOURCES_DIR}
-DATA			:= ${HOME}/data
-VOLUMES			:= ${addprefix ${DATA}/, \
-						nginx \
-					}
-
-
-#------------------------------------------------------------------------------#
-#   COLORS                                                                     #
-#------------------------------------------------------------------------------#
-CRUSH	:= \r\033[K
-ECHO	:= echo -n "$(CRUSH)"
-R		:= $(shell tput setaf 1)
-G		:= $(shell tput setaf 2)
-END		:= $(shell tput sgr0)
-
-#------------------------------------------------------------------------------#
-#   RULES                                                                      #
-#------------------------------------------------------------------------------#
-all: up
-
-up: create_dir
-	${COMPOSE} up -d
-
-down: down
-	${COMPOSE} down
-
-clean:
-	${COMPOSE} down --rmi all
-
-fclean:
-	${COMPOSE} down --rmi all --volumes
-	docker system prune -af
-	sudo rm -rf ${VOLUMES}
-
-re: fclean all
+VOLUME_PATH=/home/raph/data
+DOCKER=docker
+CONTAINER=$(DOCKER) container
+COMPOSE_FILE=srcs/docker-compose.yml
+COMPOSE=$(DOCKER) compose -f  $(COMPOSE_FILE) 
+VOLUME=$(DOCKER) volume
+IMAGE=$(DOCKER) image
+all: create_dir compose/up-build
 
 create_dir:
-	mkdir -p ${VOLUMES}
+	mkdir -p $(VOLUME_PATH)/db $(VOLUME_PATH)/static
 
-#------------------------------------------------------------------------------#
-#   SPEC                                                                       #
-#------------------------------------------------------------------------------#
-.PHONY: up down clean fclean re create_dir
-.SILENT:
+compose/%:
+	$(COMPOSE) $(@F) 
+.PHONY: compose/% 
+
+compose/up-build:
+	$(COMPOSE) up --build 
+.PHONY: compose/up-build
+
+
+bash/%:
+	$(CONTAINER) exec -it $(@F) bash
+.PHONY: bash/%
+
+clean/containers:
+	$(CONTAINER) rm -f $$($(CONTAINER) ls -aq)
+.PHONY: clean/containers
+
+clean/volumes:
+	$(VOLUME) rm -f $$($(VOLUME) ls -q)
+.PHONY: clean/volumes
+
+clean/images:
+	$(IMAGE) rm -f $$($(IMAGE) ls -q)
+
+clean/buildx:
+	$(DOCKER) buildx prune -f
+
+nuke/all: clean/images clean/volumes clean/buildx clean/containers
+
+.PHONY: clean/all
+
+
+rebuild: clean compose/build all
+.PHONY: rebuild
+
+clean: compose/down
+	sudo rm -rf $(VOLUME_PATH)/db $(VOLUME_PATH)/static
+.PHONY: clean
+
+re: clean
+	make all
+.PHONY: re

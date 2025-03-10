@@ -6,8 +6,32 @@ services:
       - "443:443"
     # volumes:
     #   - wordpress-data:/var/www/html/
-    # depends_on:
-    #   - wordpress
+    depends_on:
+      - wordpress
+    restart: always
+    networks:
+      - inception
+
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress/
+    ports:
+      - "443:443"
+    # volumes:
+    #   - wordpress-data:/var/www/html/
+    depends_on:
+      - mariadb
+    restart: always
+    networks:
+      - inception
+
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb/
+    ports:
+      - "443:443"
+    # volumes:
+    #   - mariadb-data:/var/www/html/
     restart: always
     networks:
       - inception

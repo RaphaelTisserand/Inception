@@ -14,7 +14,7 @@ systemctl enable mariadb
 mysql_secure_installation
 EOF
 
-COPY ./conf/mariadb.conf .etc/mariadb
+COPY ./conf/mariadb.conf /etc/mariadb/
 
 EXPOSE 3306
 
