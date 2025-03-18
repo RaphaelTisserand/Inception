@@ -12,6 +12,6 @@ apt-get clean
 rm -rf /var/lib/apt/lists/*
 EOF
 
-COPY ./conf/wordpress.conf ./etc/wordpress/
+# COPY ./conf/wordpress.conf ./etc/wordpress/
 
-RUN chown -R www-data:www-data /var/www/html
+# RUN chown -R www-data:www-data /var/www/html

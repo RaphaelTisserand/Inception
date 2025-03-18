@@ -12,9 +12,13 @@ apt-get dist-upgrade -y
 apt-get install mariadb-server -y
 apt-get clean
 rm -rf /var/lib/apt/lists/*
-cp ./conf/myscript.sh /myscript.sh
-sed -i s/^bind-adress.*$/bind-adress = 0.0.0.0/g /etc/mysql/mariadb.conf.d/50-server.cnf
-chmod u+x /start_script.sh
+EOF
+
+COPY ./tools/myscript.sh /myscript.sh
+
+RUN <<EOF
+sed -i s/^bind-address.*$/bind-address = 0.0.0.0/g /etc/mysql/mariadb.conf.d/50-server.cnf
+chmod u+x /myscript.sh
 EOF
 
 ENTRYPOINT ["/myscript.sh"]
