@@ -2,6 +2,8 @@
 
 FROM debian:bookworm
 
+EXPOSE 9000
+
 LABEL maintainer="Raphael TISSERAND <rtissera@student.42.fr>"
 
 RUN <<EOF
