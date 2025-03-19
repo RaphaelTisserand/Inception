@@ -14,11 +14,10 @@ apt-get clean
 rm -rf /var/lib/apt/lists/*
 EOF
 
-COPY ./tools/myscript.sh /myscript.sh
+COPY ./tools/myscript.sh /etc/
+COPY ./conf/my.cnf /etc/mysql/
 
-RUN <<EOF
-sed -i s/^bind-address.*$/bind-address = 0.0.0.0/g /etc/mysql/mariadb.conf.d/50-server.cnf
-chmod u+x /myscript.sh
-EOF
+RUN ["sed", "-i", "s/^bind-address.*$/bind-address = 0.0.0.0/g", "/etc/mysql/mariadb.conf.d/50-server.cnf"]
+RUN ["chmod", "u+x", "/myscript.sh"]
 
-ENTRYPOINT ["/myscript.sh"]
+ENTRYPOINT ["/etc/myscript.sh"]
