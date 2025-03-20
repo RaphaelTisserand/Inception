@@ -12,11 +12,11 @@ apt-get dist-upgrade -y
 apt-get install mariadb-server -y
 apt-get clean
 rm -rf /var/lib/apt/lists/*
-mkdir -p /etc/mariadb/ /etc/mysql/
+mkdir -p /etc/mariadb /etc/mysql
 EOF
 
-COPY ./tools/myscript.sh /etc/mariadb/
-COPY ./conf/my.cnf /etc/mysql/
+COPY ./tools/myscript.sh /etc/mariadb/myscript.sh
+COPY ./conf/my.cnf /etc/mysql/myscript.sh
 
 RUN ["sed", "-i", "s/^bind-address.*$/bind-address = 0.0.0.0/g", "/etc/mysql/mariadb.conf.d/50-server.cnf"]
 RUN ["chmod", "u+x", "/etc/mariadb/myscript.sh"]
