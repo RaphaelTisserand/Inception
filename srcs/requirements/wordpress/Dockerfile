@@ -12,9 +12,6 @@ apt-get dist-upgrade -y
 apt-get install php7.4 pfp-fpm php-mysql mariadb-client curl -y
 apt-get clean
 rm -rf /var/lib/apt/lists/*
-curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-chmod +x wp-cli.phar
-mv wp-cli.phar /usr/local/bin/wpw
 mkdir -p /etc/wordpress
 EOF
 
