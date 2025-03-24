@@ -1,25 +1,22 @@
 #!/bin/sh
 
-mkdir -p /run/mysqld/
+mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
 chown -R mysql:mysql /var/lib/mysql
 
 if [ ! -f /var/lib/mysql/.installed ]; then
-	echo "Launching install script"
 	mariadb-install-db --user mysql
-	echo "Creating wordpress db and admin user"
 	mariadbd --bootstrap --user mysql <<EOF
-FLUSH PRIVILEGES;
-CREATE DATABASE $MARIADB_DBNAME;
-CREATE USER "$MARIADB_USER"@'%' IDENTIFIED BY "$MARIADB_PASSWORD";
-GRANT ALL PRIVILEGES ON $MARIADB_DBNAME.* TO "$MARIADB_USER"@'%' IDENTIFIED BY "$MARIADB_PASSWORD";
-FLUSH PRIVILEGES;
-exit
+	FLUSH PRIVILEGES;
+	CREATE DATABASE $SQL_DATABASE;
+	CREATE USER "$SQL_USER"@'%' IDENTIFIED BY "$SQL_PASSWORD";
+	GRANT ALL PRIVILEGES ON $SQL_DBNAME.* TO "$SQL_USER"@'%' IDENTIFIED BY "$SQL_PASSWORD";
+	FLUSH PRIVILEGES;
+	exit
 EOF
 	touch /var/lib/mysql/.installed
 else
-	echo "mariadb is already installed, skipping installation.."
+	echo "MariaDB already installed."
 fi
 
-echo "starting mariadbd server"
 exec mariadbd --user mysql

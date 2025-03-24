@@ -18,7 +18,9 @@ EOF
 COPY ./tools/myscript.sh /etc/mariadb/myscript.sh
 COPY ./conf/my.cnf /etc/mysql/myscript.sh
 
-RUN ["sed", "-i", "s/^bind-address.*$/bind-address = 0.0.0.0/g", "/etc/mysql/mariadb.conf.d/50-server.cnf"]
-RUN ["chmod", "u+x", "/etc/mariadb/myscript.sh"]
+RUN <<EOF
+sed -i s/^bind-address.*$/bind-address = 0.0.0.0/g /etc/mysql/mariadb.conf.d/50-server.cnf
+chmod u+x /etc/mariadb/myscript.sh
+EOF
 
 ENTRYPOINT ["/etc/mariadb/myscript.sh"]
