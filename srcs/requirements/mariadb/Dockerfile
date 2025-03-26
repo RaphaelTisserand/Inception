@@ -16,7 +16,7 @@ mkdir -p /etc/mariadb /etc/mysql
 EOF
 
 COPY ./tools/myscript.sh /etc/mariadb/myscript.sh
-COPY ./conf/my.cnf /etc/mysql/myscript.sh
+COPY ./conf/my.cnf /etc/mysql/my.cnf
 
 RUN <<EOF
 sed -i s/^bind-address.*$/bind-address = 0.0.0.0/g /etc/mysql/mariadb.conf.d/50-server.cnf

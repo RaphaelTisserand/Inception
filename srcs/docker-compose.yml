@@ -16,12 +16,12 @@ services:
     depends_on:
       - mariadb
     container_name: wordpress
-    build: ./requirements/wordpress/
+    restart: always
     volumes:
       - wordpress-data:/var/www/html/
-    restart: always
     networks:
       - inception
+    build: ./requirements/wordpress/
 
   mariadb:
     container_name: mariadb
@@ -39,13 +39,13 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /home/login/rtissera/mariadb
+      device: /home/rtissera/data/mariadb
   wordpress-data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/login/rtissera/wordpress
+      device: /home/rtissera/data/wordpress
 
 networks:
   inception:

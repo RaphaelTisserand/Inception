@@ -2,7 +2,9 @@
 
 mkdir -p /run/php /var/www/html
 
-if [ ! -f /var/www/html/.installed ]; then
+if [ -f /var/www/html/.installed ]; then
+	echo "Wordpress aleady installed."
+else
 	cp /usr/bin/php82 /usr/bin/php
 	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 	chmod +x wp-cli.phar
@@ -13,8 +15,6 @@ if [ ! -f /var/www/html/.installed ]; then
 	wp-cli.phar core install --url=$DOMAIN_NAME --title=$SITE_TITLE --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL --allow-root
 	wp-cli.phar user create $WP_USER $WP_EMAIL --role=subscriber --user_pass=$WP_PASSWORD --allow-root
 	touch /var/www/html/.installed
-else
-	echo "Wordpress aleady installed."
 fi
 
-exec php-fpm82 -F -R
+exec php82-fpm -F -R

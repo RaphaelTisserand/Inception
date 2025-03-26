@@ -4,7 +4,9 @@ mkdir -p /run/mysqld
 chown -R mysql:mysql /run/mysqld
 chown -R mysql:mysql /var/lib/mysql
 
-if [ ! -f /var/lib/mysql/.installed ]; then
+if [ -f /var/lib/mysql/.installed ]; then
+	echo "MariaDB already installed."
+else
 	mariadb-install-db --user mysql
 	mariadbd --bootstrap --user mysql <<EOF
 	FLUSH PRIVILEGES;
@@ -15,8 +17,6 @@ if [ ! -f /var/lib/mysql/.installed ]; then
 	exit
 EOF
 	touch /var/lib/mysql/.installed
-else
-	echo "MariaDB already installed."
 fi
 
 exec mariadbd --user mysql

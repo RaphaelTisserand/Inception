@@ -10,7 +10,7 @@ apt-get dist-upgrade -y
 apt-get install nginx openssl -y
 apt-get clean
 rm -rf /var/lib/apt/lists/*
-mkdir -p /etc/nginx/ssl /etc/nginx/
+mkdir -p /etc/nginx/ssl
 openssl req \
 		-x509 \
 		-newkey rsa:2048 \
