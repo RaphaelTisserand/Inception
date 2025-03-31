@@ -2,7 +2,7 @@
 
 FROM debian:bookworm
 
-EXPOSE 3306
+# EXPOSE 3306
 
 LABEL maintainer="Raphael TISSERAND <rtissera@student.42.fr>"
 
@@ -20,7 +20,7 @@ COPY ./conf/my.cnf /etc/mysql/my.cnf
 
 RUN <<EOF
 sed -i s/^bind-address.*$/bind-address = 0.0.0.0/g /etc/mysql/mariadb.conf.d/50-server.cnf
-chmod u+x /etc/mariadb/myscript.sh
+chmod +x /etc/mariadb/myscript.sh
 EOF
 
 ENTRYPOINT ["/etc/mariadb/myscript.sh"]

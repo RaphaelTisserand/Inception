@@ -12,16 +12,17 @@ apt-get clean
 rm -rf /var/lib/apt/lists/*
 mkdir -p /etc/nginx/ssl
 openssl req \
-		-x509 \
-		-newkey rsa:2048 \
-		-keyout /etc/nginx/ssl/inception.key \
-		-out /etc/nginx/ssl/inception.crt \
-		-days 365 \
-		-noenc \
-		-subj '/C=FR/ST=Ile-de-France/L=Paris/O=42/OU=42Paris/CN=rtissera.42.fr/UID=rtissera/emailAddress=rtissera@student.42.fr'
+	-x509 \
+	-newkey rsa:2048 \
+	-keyout /etc/nginx/ssl/inception.key \
+	-out /etc/nginx/ssl/inception.crt \
+	-days 365 \
+	-noenc \
+	-subj '/C=FR/ST=Ile-de-France/L=Paris/O=42/OU=42Paris/CN=rtissera.42.fr/UID=rtissera/emailAddress=rtissera@student.42.fr'
 EOF
 
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
+RUN chmod +x /etc/nginx/nginx.conf
 
 RUN chown -R www-data:www-data /var/www/html
 

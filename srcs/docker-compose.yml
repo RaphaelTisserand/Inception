@@ -16,6 +16,8 @@ services:
     depends_on:
       - mariadb
     container_name: wordpress
+    ports:
+      - 9000:9000
     restart: always
     volumes:
       - wordpress-data:/var/www/html/
@@ -25,6 +27,8 @@ services:
 
   mariadb:
     container_name: mariadb
+    ports:
+      - 3306:3306
     restart: always
     env_file: .env
     volumes:

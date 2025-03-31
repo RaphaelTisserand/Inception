@@ -1,11 +1,13 @@
 #!/bin/sh
 
+sleep 10
+
 mkdir -p /run/php /var/www/html
 
 if [ -f /var/www/html/.installed ]; then
 	echo "Wordpress aleady installed."
 else
-	cp /usr/bin/php82 /usr/bin/php
+	cp /usr/bin/php /usr/bin/php
 	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 	chmod +x wp-cli.phar
 	mv wp-cli.phar /usr/local/bin/wp-cli.phar
@@ -17,4 +19,4 @@ else
 	touch /var/www/html/.installed
 fi
 
-exec php82-fpm -F -R
+exec php-fpm -F -R

@@ -1,12 +1,15 @@
 all:
 	mkdir -p /home/rtissera/data/wordpress/ /home/rtissera/data/mariadb/
-	sudo docker compose -f srcs/docker-compose.yml up
+	docker compose -f srcs/docker-compose.yml up -d --build
 
 down:
-	sudo docker compose -f srcs/docker-compose.yml down
+	docker compose -f srcs/docker-compose.yml down
 
 clean: down
-	sudo rm -rf /home/rtissera/data/wordpress/ /home/rtissera/data/mariadb/
+	docker system prune -f -a --volumes
+	sudo rm -rf /home/rtissera/data/
 
 re: clean
 	make all
+
+.PHONY: down clean re
