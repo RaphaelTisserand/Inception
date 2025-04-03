@@ -11,7 +11,7 @@ apt-get update
 apt-get dist-upgrade -y
 apt-get install mariadb-server -y
 apt-get clean
-rm -rf /var/lib/apt/lists/*
+rm -r -f /var/lib/apt/lists/*
 mkdir -p /etc/mariadb /etc/mysql
 EOF
 

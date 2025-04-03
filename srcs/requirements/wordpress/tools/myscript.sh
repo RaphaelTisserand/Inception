@@ -1,8 +1,8 @@
 #!/bin/sh
 
-sleep 10
+sleep 20
 
-mkdir -p /run/php /var/www/html
+mkdir -p /run/php var/run/php /var/www/html
 
 if [ -f /var/www/html/.installed ]; then
 	echo "Wordpress aleady installed."
@@ -19,4 +19,4 @@ else
 	touch /var/www/html/.installed
 fi
 
-exec php-fpm -F -R
+exec php-fpm7.4 -F -R

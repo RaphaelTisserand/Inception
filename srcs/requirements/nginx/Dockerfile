@@ -9,8 +9,8 @@ apt-get update
 apt-get dist-upgrade -y
 apt-get install nginx openssl -y
 apt-get clean
-rm -rf /var/lib/apt/lists/*
-mkdir -p /etc/nginx/ssl
+rm -r -f /var/lib/apt/lists/*
+mkdir -p /etc/nginx/ssl /var/www/html
 openssl req \
 	-x509 \
 	-newkey rsa:2048 \
@@ -22,9 +22,9 @@ openssl req \
 EOF
 
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
-RUN chmod +x /etc/nginx/nginx.conf
 
-RUN chown -R www-data:www-data /var/www/html
+RUN ["chmod", "+x", "/etc/nginx/nginx.conf"]
+RUN ["chown", "-R", "www-data:www-data", "/var/www/html"]
 
 ENTRYPOINT ["nginx"]
 CMD ["-g", "daemon off;"]

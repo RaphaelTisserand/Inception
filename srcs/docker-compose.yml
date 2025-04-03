@@ -5,10 +5,13 @@ services:
     container_name: nginx
     build: ./requirements/nginx/
     ports:
-      - 443:443
+      - '443:443'
     volumes:
       - wordpress-data:/var/www/html/
-    restart: always
+    restart: on-failure
+    init: true
+    env_file:
+      - .env
     networks:
       - inception
 
@@ -17,8 +20,11 @@ services:
       - mariadb
     container_name: wordpress
     ports:
-      - 9000:9000
-    restart: always
+      - '9000:9000'
+    restart: on-failure
+    init: true
+    env_file:
+      - .env
     volumes:
       - wordpress-data:/var/www/html/
     networks:
@@ -28,9 +34,11 @@ services:
   mariadb:
     container_name: mariadb
     ports:
-      - 3306:3306
-    restart: always
-    env_file: .env
+      - '3306:3306'
+    restart: on-failure
+    env_file:
+      - .env
+    init: true
     volumes:
       - mariadb-data:/var/www/html/
     networks:
