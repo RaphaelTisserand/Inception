@@ -1,7 +1,10 @@
 # ---------------------------------------------------------------------------- #
 #   UTILS                                                                      #
 # ---------------------------------------------------------------------------- #
-MAKEFLAGS	+= --silent --no-print-directory# --jobs
+ifndef VERBOSE
+	MAKEFLAGS	+= --silent --no-print-directory
+endif
+# MAKEFLAGS	+= --jobs
 ERR_MUTE	:= 2>/dev/null
 
 # ---------------------------------------------------------------------------- #
@@ -9,6 +12,7 @@ ERR_MUTE	:= 2>/dev/null
 # ---------------------------------------------------------------------------- #
 SOURCES_FOLDER	:=	./srcs
 COMPOSE		:=	docker compose --project-directory ${SOURCES_FOLDER}
+SYSTEM		:=	docker system
 DATA		:=	${HOME}/data
 VOLUMES		:=	${addprefix ${DATA}/, wordpress mariadb}
 
@@ -34,7 +38,7 @@ clean:
 
 .PHONY: fclean
 fclean: clean
-	docker system prune -f -a --volumes
+	$(SYSTEM) prune -f -a --volumes
 	sudo rm -r -f $(VOLUMES)
 
 .PHONY: re

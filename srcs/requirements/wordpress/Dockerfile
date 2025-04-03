@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM debian:bookworm
+FROM debian:bullseye
 
 LABEL maintainer="Raphael TISSERAND <rtissera@student.42.fr>"
 

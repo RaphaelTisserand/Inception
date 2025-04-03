@@ -19,4 +19,4 @@ else
 	touch /var/www/html/.installed
 fi
 
-exec php-fpm7.4 -F -R
+exec /usr/sbin/php-fpm7.4 -F
