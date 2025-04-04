@@ -2,8 +2,6 @@
 
 mkdir -p /run/php var/run/php /var/www/html
 
-sleep 5
-
 if [ -f /var/www/html/.installed ]; then
 	echo "Wordpress aleady installed."
 else
@@ -13,6 +11,12 @@ else
 	mv wp-cli.phar /usr/local/bin/wp-cli.phar
 	wp-cli.phar core download --allow-root
 	wp-cli.phar config create --dbname=$SQL_DATABASE --dbuser=$SQL_USER --dbpass=$SQL_PASSWORD --dbhost=3306 --allow-root
+
+	until wp db check --dbuser=$MARIADB_USER --dbpass=$MARIADB_PASSWORD --path=/var/www/html --quiet --allow-root; do
+	echo "Waiting for MySQL..."
+	sleep 1
+	done
+
 	wp-cli.phar core install --url=$DOMAIN_NAME --title=$SITE_TITLE --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PASSWORD --admin_email=$WP_ADMIN_EMAIL --allow-root
 	wp-cli.phar user create $WP_USER $WP_EMAIL --role=subscriber --user_pass=$WP_PASSWORD --allow-root
 	wp theme install twentyfourteen --activate --allow-root
