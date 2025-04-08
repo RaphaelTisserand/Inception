@@ -37,8 +37,9 @@ clean:
 	$(COMPOSE) down --rmi all
 
 .PHONY: fclean
-fclean: clean
-	$(SYSTEM) prune -f -a --volumes
+fclean:
+	$(COMPOSE) down --rmi all --volumes
+	$(SYSTEM) prune -f -a
 	sudo rm -r -f $(VOLUMES)
 
 .PHONY: re
@@ -63,7 +64,5 @@ ps:
 .PHONY: info-%
 info-%:
 	$(MAKE) --dry-run --always-make $* | grep -v "info"
-
-# -include ./templates/template.mk
 
 # .SILENT:
