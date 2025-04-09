@@ -1,10 +1,10 @@
 #!/bin/sh
 
-if [ -f /var/www/html/.installed ]; then
+if [ -f /var/www/html/wp-config.php ]; then
 	echo "Wordpress aleady installed."
 else
 
-	sleep 15
+	sleep 20
 
 	wp-cli.phar config create \
 		--dbname=$SQL_DATABASE \
@@ -25,8 +25,6 @@ else
 		--user_pass=$WP_PASSWORD \
 		--allow-root \
 		--path='/var/www/html'
-
-	touch /var/www/html/.installed
 fi
 
 exec /usr/sbin/php-fpm7.4 -F

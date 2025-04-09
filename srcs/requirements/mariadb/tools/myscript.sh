@@ -19,4 +19,6 @@ EOF
 touch /var/lib/mysql/.installed
 fi
 
+sleep 5
+
 exec mariadbd --user mysql
