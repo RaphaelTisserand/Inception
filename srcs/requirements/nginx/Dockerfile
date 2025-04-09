@@ -23,7 +23,7 @@ EOF
 
 COPY ./conf/nginx.conf /etc/nginx/conf.d/nginx.conf
 
-RUN chmod 755 /var/www/html
+RUN ["chmod", "755", "/var/www/html"]
 RUN ["chown", "-R", "www-data:www-data", "/var/www/html"]
 
 ENTRYPOINT ["nginx"]

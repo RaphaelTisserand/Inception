@@ -5,7 +5,7 @@ services:
     container_name: nginx
     build: ./requirements/nginx/
     ports:
-      - '443:443'
+      - "443:443"
     volumes:
       - wordpress-data:/var/www/html/
     restart: on-failure
@@ -19,8 +19,6 @@ services:
     depends_on:
       - mariadb
     container_name: wordpress
-    ports:
-      - '9000:9000'
     restart: on-failure
     init: true
     env_file:
@@ -33,8 +31,6 @@ services:
 
   mariadb:
     container_name: mariadb
-    ports:
-      - '3306:3306'
     restart: on-failure
     env_file:
       - .env
