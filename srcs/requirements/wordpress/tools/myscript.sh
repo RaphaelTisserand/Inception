@@ -16,7 +16,7 @@ else
 		--dbname=$SQL_DATABASE \
 		--dbuser=$SQL_USER \
 		--dbpass=$SQL_PASSWORD \
-		--dbhost=mariadb \
+		--dbhost=mariadb:3306 \
 		--allow-root \
 		--skip-check
 	wp core install \

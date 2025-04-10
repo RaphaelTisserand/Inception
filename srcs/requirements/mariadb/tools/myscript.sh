@@ -1,22 +1,20 @@
 #!/bin/sh
 
-mkdir -p /run/mysqld
-chown -R mysql:mysql /run/mysqld
-chown -R mysql:mysql /var/lib/mysql
-
-if [ -f /var/lib/mysql/.installed ]; then
+if [ -d "/var/lib/mysql/$SQL_DATABASE" ]; then
 	echo "MariaDB already installed."
 else
-	mariadb-install-db --user mysql
-	mariadbd --bootstrap --user mysql <<EOF
-FLUSH PRIVILEGES;
-CREATE DATABASE $SQL_DATABASE;
-CREATE USER "$SQL_USER"@'%' IDENTIFIED BY "$SQL_PASSWORD";
-GRANT ALL PRIVILEGES ON $SQL_DATABASE.* TO "$SQL_USER"@'%' IDENTIFIED BY "$SQL_PASSWORD";
-FLUSH PRIVILEGES;
-exit
-EOF
-	touch /var/lib/mysql/.installed
+	service mariadb start
+
+	sleep 3
+
+	echo "CREATE DATABASE IF NOT EXISTS $SQL_DATABASE;" | mariadb -u root
+	echo "CREATE USER IF NOT EXISTS $SQL_USER@'localhost' IDENTIFIED BY '$SQL_PASSWORD';" | mariadb -u root
+	echo "GRANT ALL PRIVILEGES ON $SQL_DATABASE.* TO $SQL_USER@'localhost' IDENTIFIED BY '$SQL_PASSWORD';" | mariadb -u root
+	echo "FLUSH PRIVILEGES;" | mariadb -u root
+
+	service mariadb start
 fi
 
-exec mariadbd --user mysql
+sleep 3
+
+exec mysqld_safe
