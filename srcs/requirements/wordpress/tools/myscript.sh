@@ -2,6 +2,8 @@
 
 cd 
 
+sleep 20
+
 if [ -f /var/www/html/wp-config.php ]; then
 	echo "Wordpress aleady installed."
 else

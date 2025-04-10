@@ -4,6 +4,8 @@ FROM debian:bullseye
 
 LABEL maintainer="Raphael TISSERAND <rtissera@student.42.fr>"
 
+EXPOSE 3306
+
 RUN <<EOF
 apt-get update
 apt-get dist-upgrade -y
@@ -13,8 +15,8 @@ rm -r -f /var/lib/apt/lists/*
 mkdir -p /etc/mariadb /etc/mysql
 EOF
 
+COPY ./conf/my.cnf /root/
 COPY ./tools/myscript.sh .
-COPY ./conf/my.cnf /root/my.cnf
 
 RUN ["chmod", "+x", "./myscript.sh"]
 

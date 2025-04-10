@@ -21,7 +21,7 @@ openssl req \
 	-subj "/C=FR/ST=Ile-de-France/L=Paris/O=42/OU=42Paris/CN=rtissera.42.fr/UID=rtissera/emailAddress=rtissera@student.42.fr"
 EOF
 
-COPY ./conf/nginx.conf /etc/nginx/conf.d/nginx.conf
+COPY ./conf/nginx.conf /etc/nginx/conf.d/
 
 RUN ["chmod", "755", "/var/www/html"]
 RUN ["chown", "-R", "www-data:www-data", "/var/www/html"]
