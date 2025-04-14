@@ -19,6 +19,8 @@ services:
     depends_on:
       - mariadb
     container_name: wordpress
+    ports:
+      - 9000
     restart: on-failure
     init: true
     env_file:
@@ -31,6 +33,8 @@ services:
 
   mariadb:
     container_name: mariadb
+    ports:
+      - 3306
     restart: on-failure
     init: true
     env_file:

@@ -6,7 +6,7 @@ if [ -f /var/www/html/wp-config.php ]; then
 	echo "Wordpress aleady installed."
 else
 
-	sleep 20
+	sleep 10
 
 	cd /var/www/html
 
@@ -16,7 +16,7 @@ else
 		--dbname=$SQL_DATABASE \
 		--dbuser=$SQL_USER \
 		--dbpass=$SQL_PASSWORD \
-		--dbhost=mariadb:3306 \
+		--dbhost=mariadb:9000 \
 		--skip-check \
 		--allow-root
 	wp core install \
