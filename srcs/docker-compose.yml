@@ -3,17 +3,17 @@ services:
     depends_on:
       - wordpress
     container_name: nginx
-    build: ./requirements/nginx/
     ports:
       - "443:443"
-    volumes:
-      - wordpress-data:/var/www/html/
     restart: on-failure
     init: true
     env_file:
       - .env
+    volumes:
+      - wordpress-data:/var/www/html/
     networks:
       - inception
+    build: ./requirements/nginx/
 
   wordpress:
     depends_on:
@@ -32,9 +32,9 @@ services:
   mariadb:
     container_name: mariadb
     restart: on-failure
+    init: true
     env_file:
       - .env
-    init: true
     volumes:
       - mariadb-data:/var/www/html/
     networks:

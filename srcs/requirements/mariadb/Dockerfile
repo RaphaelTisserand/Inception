@@ -4,8 +4,6 @@ FROM debian:bullseye
 
 LABEL maintainer="Raphael TISSERAND <rtissera@student.42.fr>"
 
-EXPOSE 3306
-
 RUN <<EOF
 apt-get update
 apt-get dist-upgrade -y
