@@ -6,12 +6,13 @@ if [ -f /var/www/html/wp-config.php ]; then
 	echo "Wordpress aleady installed."
 else
 
-	sleep 10
+	sleep 15
 
 	cd /var/www/html
 
 	wp core download \
 		--allow-root
+	rm -f /var/www/html/wp-config.php
 	wp config create \
 		--dbname=$SQL_DATABASE \
 		--dbuser=$SQL_USER \
