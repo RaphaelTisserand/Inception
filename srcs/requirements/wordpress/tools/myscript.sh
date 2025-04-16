@@ -1,5 +1,9 @@
 #!/bin/sh
 
+SQL_IP=$(getent hosts $SQL_DATABASE | awk '{ print $1 }')
+echo "$SQL_IP $SQL_DATABASE" >> /etc/hosts
+exec 2>&1
+
 cd /var/www/html/
 
 rm -f wp-config.php
@@ -13,7 +17,7 @@ wp config create \
 	--allow-root \
 	--path='/var/www/html'
 
-until wp db check --dbuser=$MARIADB_USER --dbpass=$MARIADB_PASSWORD --path=/var/www/html --quiet --allow-root; do
+until wp db check --dbuser=$SQL_USER --dbpass=$SQL_PASSWORD --path=/var/www/html --quiet --allow-root; do
 	echo "Waiting for MySQL..."
 	sleep 1
 done
