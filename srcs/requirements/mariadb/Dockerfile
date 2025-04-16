@@ -10,18 +10,17 @@ apt-get dist-upgrade -y
 apt-get install mariadb-server -y
 apt-get clean
 rm -r -f /var/lib/apt/lists/*
-mkdir -p /run/mysqld
+mkdir -p /var/run/mysqld
 EOF
 
 COPY ./conf/my.cnf /root/my.cnf
 COPY ./tools/myscript.sh .
 
 RUN <<EOF
-chown -R mysql:mysql /run/mysqld
-chown -R mysql:mysql /var/lib/mysql
-chmod +x ./myscript.sh
+mkdir -p /var/run/mysqld
+chmod 777 /var/run/mysqld 
+chown -R mysql:mysql /var/run/mysqld
+chmod +x myscript.sh
 EOF
-
-EXPOSE 3306
 
 ENTRYPOINT ["./myscript.sh"]

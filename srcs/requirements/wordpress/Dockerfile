@@ -26,6 +26,4 @@ COPY ./conf/www.conf  /etc/php/7.4/fpm/pool.d/www.conf
 COPY ./tools/myscript.sh .
 RUN ["chmod", "+x", "./myscript.sh"]
 
-EXPOSE 9000
-
 ENTRYPOINT ["./myscript.sh"]
