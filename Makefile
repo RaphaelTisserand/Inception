@@ -34,16 +34,15 @@ all: up
 
 .PHONY: clean
 clean:
-	$(COMPOSE) down --rmi all
+	$(COMPOSE) down --rmi all --volumes
 
 .PHONY: fclean
-fclean:
-	$(COMPOSE) down --rmi all --volumes
+fclean: clean
 	$(SYSTEM) prune -f -a
 	sudo rm -r -f $(VOLUMES)
 
 .PHONY: re
-re: fclean all
+re: clean all
 
 .PHONY: up
 up: create_dir build create

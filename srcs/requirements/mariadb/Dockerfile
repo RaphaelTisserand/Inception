@@ -10,12 +10,6 @@ apt-get dist-upgrade -y
 apt-get install mariadb-server -y
 apt-get clean
 rm -r -f /var/lib/apt/lists/*
-mkdir -p /var/run/mysqld
-EOF
-
-RUN <<EOF
-chmod 777 /var/run/mysqld 
-chown -R mysql:mysql /var/run/mysqld
 EOF
 
 COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf

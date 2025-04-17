@@ -10,7 +10,7 @@ services:
     env_file:
       - .env
     volumes:
-      - wordpress-data:/var/www/html/
+      - wordpress:/var/www/html/
     networks:
       - inception
     build: ./requirements/nginx/
@@ -26,7 +26,7 @@ services:
     env_file:
       - .env
     volumes:
-      - wordpress-data:/var/www/html/
+      - wordpress:/var/www/html/
     networks:
       - inception
     build: ./requirements/wordpress/
@@ -40,24 +40,24 @@ services:
     env_file:
       - .env
     volumes:
-      - mariadb-data:/var/www/html/
+      - mariadb:/var/www/html/
     networks:
       - inception
     build: ./requirements/mariadb/
 
 volumes:
-  mariadb-data:
+  mariadb:
     driver: local
     driver_opts:
-      type: none
-      o: bind
-      device: /home/rtissera/data/mariadb
-  wordpress-data:
+      type: 'none'
+      o: 'bind'
+      device: '/home/rtissera/data/mariadb'
+  wordpress:
     driver: local
     driver_opts:
-      type: none
-      o: bind
-      device: /home/rtissera/data/wordpress
+      type: 'none'
+      o: 'bind'
+      device: '/home/rtissera/data/wordpress'
 
 networks:
   inception:

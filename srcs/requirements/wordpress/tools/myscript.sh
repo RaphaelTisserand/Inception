@@ -1,22 +1,30 @@
 #!/bin/sh
 
-#until echo "SHOW DATABASES;" | mysql -h mariadb -u"$SQL_USER" -p"$SQL_PASSWORD" | grep -q "$SQL_DATABASE"; do
-#	echo "Waiting for WordPress database to be accessible..."
-#	sleep 1
-#done
+wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+chmod +x wp-cli.phar
+mv wp-cli.phar /usr/local/bin/wp
+
+cd /var/www/html
+
+wp core download --allow-root
 
 rm -f /var/www/html/wp-config.php
 
 wp config create \
 	--dbname=$SQL_DATABASE \
 	--dbuser=$SQL_USER \
-	--dbpass=$SQL_ROOT_PASSWORD \
-	--dbhost=mariadb:3360 \
+	--dbpass=$SQL_PASSWORD \
+	--dbhost=mariadb:3306 \
 	--skip-check \
 	--path=/var/www/html \
 	--allow-root
 
-until wp db check --dbuser=$SQL_USER --dbpass=$SQL_ROOT_PASSWORD --path=/var/www/html --quiet --allow-root; do
+until wp db check \
+	--dbuser=$SQL_USER \
+	--dbpass=$SQL_PASSWORD \
+	--path=/var/www/html \
+	--quiet \
+	--allow-root; do
 	echo "Waiting for MySQL..."
 	sleep 1
 done
@@ -31,7 +39,7 @@ wp core install \
 	--allow-root
 
 wp user create $WP_USER "$WP_USER_EMAIL" \
-	--role=author \
+	--role=subscriber \
 	--user_pass=$WP_USER_PASSWORD \
 	--path=/var/www/html \
 	--allow-root
