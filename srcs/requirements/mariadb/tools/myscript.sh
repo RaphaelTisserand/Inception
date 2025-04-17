@@ -2,7 +2,7 @@
 
 service mariadb start
 
-sleep 3
+sleep 5
 
 echo "CREATE DATABASE IF NOT EXISTS $SQL_DATABASE;" | mariadb -u root
 echo "CREATE USER IF NOT EXISTS $SQL_USER@'localhost' IDENTIFIED BY '$SQL_PASSWORD';" | mariadb -u root
@@ -12,6 +12,6 @@ echo "FLUSH PRIVILEGES;" | mariadb -u root -p$SQL_ROOT_PASSWORD
 
 kill $(cat /var/run/mysqld/mysqld.pid)
 
-sleep 3
+sleep 5
 
 exec mysqld_safe

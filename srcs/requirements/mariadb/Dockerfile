@@ -13,14 +13,14 @@ rm -r -f /var/lib/apt/lists/*
 mkdir -p /var/run/mysqld
 EOF
 
-COPY ./conf/my.cnf /root/my.cnf
-COPY ./tools/myscript.sh .
-
 RUN <<EOF
-mkdir -p /var/run/mysqld
 chmod 777 /var/run/mysqld 
 chown -R mysql:mysql /var/run/mysqld
-chmod +x myscript.sh
 EOF
+
+COPY ./conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY ./tools/myscript.sh .
+
+RUN ["chmod", "+x", "myscript.sh"]
 
 ENTRYPOINT ["./myscript.sh"]
