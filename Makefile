@@ -38,11 +38,14 @@ clean:
 
 .PHONY: fclean
 fclean: clean
-	$(SYSTEM) prune -f -a
+	$(SYSTEM) prune -f -a --volumes
 	sudo rm -r -f $(VOLUMES)
 
 .PHONY: re
-re: clean all
+re: fclean all
+
+.PHONY: dre
+dre: clean all
 
 .PHONY: up
 up: create_dir build create
