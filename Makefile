@@ -44,8 +44,11 @@ fclean: clean
 .PHONY: re
 re: fclean all
 
+.PHONY: cre
+cre: clean all
+
 .PHONY: dre
-dre: clean all
+dre: down all
 
 .PHONY: up
 up: create_dir build create
